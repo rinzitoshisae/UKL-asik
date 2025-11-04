@@ -1,0 +1,51 @@
+/* theme.css */
+
+/* === FONT STYLING === */
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Poppins:wght@400;600&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  animation: oceanMove 30s infinite linear;
+  background-attachment: fixed;
+}
+
+/* Judul dan teks besar tetap punya pirate vibes */
+h1, h2, h3 {
+  font-family: 'Crimson Pro', serif;
+}
+
+/* === BACKGROUND ANIMATION (Ombak Laut) === */
+@keyframes oceanMove {
+  0% { background-position: 0 0; }
+  100% { background-position: 100% 100%; }
+}
+
+/* === INPUT STYLING === */
+input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'Poppins', sans-serif;
+}
+
+input {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* === BUTTON STYLING === */
+button {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(255, 200, 50, 0.4);
+}
+
+/* === OPTIONAL: Efek Glass lebih halus === */
+.backdrop-blur-md {
+  backdrop-filter: blur(16px);
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riwayat Presensi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style/theme.css">
+
+    <style>
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.7),
+                    rgba(0, 0, 0, 0.4)),
+                url('src/op16.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen p-8 text-white">
+
+    <h1 class="text-4xl font-bold mb-8 text-yellow-400 drop-shadow-lg">
+        📜 Riwayat Presensi
+    </h1>
+
+    <div class="glass rounded-xl shadow-xl overflow-hidden">
+        <table class="min-w-full text-white">
+            <thead>
+                <tr class="bg-black/40 text-yellow-300 text-lg">
+                    <th class="py-3 px-4 border-b border-white/20">Tanggal</th>
+                    <th class="py-3 px-4 border-b border-white/20">Jam Masuk</th>
+                    <th class="py-3 px-4 border-b border-white/20">Jam Keluar</th>
+                    <th class="py-3 px-4 border-b border-white/20">Status</th>
+                </tr>
+            </thead>
+            <tbody id="dataPresensi" class="text-center"></tbody>
+        </table>
+    </div>
+
+    <a href="dashboard.html"
+        class="inline-block bg-yellow-400 hover:bg-yellow-300 text-black px-5 py-2 rounded-lg mt-6 font-semibold shadow-md transition">
+        ← Kembali ke Dashboard
+    </a>
+
+    <script>
+        const user = localStorage.getItem("user");
+        const tbody = document.getElementById("dataPresensi");
+
+        const data = JSON.parse(localStorage.getItem("presensi_" + user)) || [];
+
+        if (data.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="4" class="py-4 text-center text-gray-200">
+                        Belum ada data presensi
+                    </td>
+                </tr>`;
+        } else {
+            data.forEach(item => {
+
+                let color = "text-green-300";
+                if (item.status === "Sakit") color = "text-yellow-300";
+                if (item.status === "Izin") color = "text-blue-300";
+
+                const row = `
+                <tr class="hover:bg-white/10 transition">
+                    <td class="py-2 px-4 border-b border-white/10">${item.tanggal}</td>
+                    <td class="py-2 px-4 border-b border-white/10">${item.jamMasuk}</td>
+                    <td class="py-2 px-4 border-b border-white/10">${item.jamKeluar}</td>
+                    <td class="py-2 px-4 border-b border-white/10 font-medium ${color}">${item.status}</td>
+                </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+    </script>
+
+</body>
+
+</html>

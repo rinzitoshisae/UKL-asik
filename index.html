@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Piece Attendance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style/theme.css">
+</head>
+
+    <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent"></div>
+
+<body class="min-h-screen bg-cover bg-center bg-no-repeat flex flex-col items-center justify-center relative text-white"
+    style="background-image: url('src/op14.jpg');">
+
+
+
+    <!-- Glass Card -->
+    <div
+        class="backdrop-blur-sm bg-white/20 border border-white/30 shadow-2xl rounded-2xl p-9 w-96 text-center text-white w-full max-w-md mx-4">
+        <h1 class="text-3xl font-bold mb-4 drop-shadow-lg">Absen-absen o dewe </h1>
+        <p class="mb-6 text-white/80">Set sail, nakama! Login gae mulai petualangannn! :)</p>
+
+        <form onsubmit="login(event)">
+            <input type="text" id="username" placeholder="Masukkan nama kru"
+                class="bg-white/30 border border-white/40 text-white placeholder-white/70 rounded w-full p-2 mb-3 focus:ring-2 focus:ring-yellow-300 outline-none">
+            <input type="password" id="password" placeholder="Kode kapal"
+                class="bg-white/30 border border-white/40 text-white placeholder-white/70 rounded w-full p-2 mb-5 focus:ring-2 focus:ring-yellow-300 outline-none">
+            <button type="submit"
+                class="w-full py-2 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-lg font-semibold text-white hover:scale-105 transition-transform shadow-lg">Berlayar
+                ⛵</button>
+        </form>
+    </div>
+
+    <script>
+        function login(e) {
+            e.preventDefault();
+            const username = document.getElementById("username").value;
+            if (username) {
+                localStorage.setItem("user", username);
+                window.location.href = "dashboard.html";
+            } else {
+                alert("Masukkan nama kmu dulu yaaa :)");
+            }
+        }
+        // bersihkan data lama saat halaman login dibuka
+        localStorage.removeItem("user");
+
+    </script>
+</body>
+
+</html>

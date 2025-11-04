@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - One Piece Attendance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style/theme.css" />
+</head>
+
+<body class="min-h-screen bg-cover bg-center bg-no-repeat flex flex-col items-center justify-center relative text-white"
+    style="background-image: url('src/op15.jpg');">
+
+    <!-- Overlay gradasi biar mata gak sakit -->
+    <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent"></div>
+
+    <!-- Glass Container -->
+    <div class="relative bg-white/10 border border-white/20 rounded-2xl shadow-2xl p-10 w-[90%] max-w-md text-center">
+
+        <!-- Foto Profil -->
+        <div class="flex flex-col items-center mb-6">
+            <img src="src/profil.jpg" alt="Foto Profil"
+                class="w-28 h-28 rounded-full border-4 border-yellow-300 shadow-lg object-cover">
+            <h2 id="namaUser" class="mt-3 text-2xl font-semibold text-yellow-300 drop-shadow-md"></h2>
+            <p class="text-sm text-white/70 italic"> Siswa Paling TEladan sak moklet! </p>
+        </div>
+
+        <p class="mb-8 text-white/80">Hii Selamat datang di Dashboard presensi!! :) ⛵</p>
+
+        <!-- Tombol aksi -->
+        <div class="space-y-4">
+            <button onclick="checkIn()"
+                class="w-full py-3 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl font-semibold text-white hover:scale-105 transition-transform shadow-lg">
+                ⏰ Check In
+            </button>
+
+            <button onclick="checkOut()"
+                class="w-full py-3 bg-gradient-to-r from-red-500 to-pink-600 rounded-xl font-semibold text-white hover:scale-105 transition-transform shadow-lg">
+                🕒 Check Out
+            </button>
+
+            <!-- ✅ Tambahan: Sakit -->
+            <button onclick="izinSakit('Sakit')"
+                class="w-full py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-xl font-semibold text-white hover:scale-105 transition-transform shadow-lg">
+                🤒 Sakit
+            </button>
+
+            <!-- ✅ Tambahan: Izin -->
+            <button onclick="izinSakit('Izin')"
+                class="w-full py-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl font-semibold text-white hover:scale-105 transition-transform shadow-lg">
+                📝 Izin
+            </button>
+        </div>
+
+        <!-- Link ke history -->
+        <a href="history.html"
+            class="block mt-8 text-yellow-300 hover:text-yellow-400 transition-colors underline font-medium">
+            📜 Lihat Riwayat Presensi
+        </a>
+
+        <!-- Tombol logout -->
+        <button onclick="logout()"
+            class="mt-6 w-full py-2 bg-white/90 hover:bg-white rounded-xl text-red-400 hover:text-red-500 transition-colors hover:scale-105 transition-transform font-medium">
+            Keluar 🚪
+        </button>
+    </div>
+
+    <script>
+        const user = localStorage.getItem("user");
+        document.getElementById("namaUser").textContent = user || "Nakama";
+
+        function getPresensi() {
+            const user = localStorage.getItem("user");
+            return JSON.parse(localStorage.getItem("presensi_" + user)) || [];
+        }
+
+        function savePresensi(data) {
+            const user = localStorage.getItem("user");
+            localStorage.setItem("presensi_" + user, JSON.stringify(data));
+        }
+
+        function checkIn() {
+            const now = new Date();
+            const tanggal = now.toISOString().split('T')[0];
+            const jamMasuk = now.toLocaleTimeString("id-ID", {
+                hour: "2-digit",
+                minute: "2-digit"
+            });
+
+            let data = getPresensi();
+
+            if (data.some(item => item.tanggal === tanggal)) {
+                alert("Kamu sudah Check In hari inii! :)");
+                return;
+            }
+
+            data.push({ tanggal, jamMasuk, jamKeluar: "-", status: "Hadir" });
+            savePresensi(data);
+
+            alert(`Check In berhasil pada ${jamMasuk}`);
+        }
+
+        function checkOut() {
+            const now = new Date();
+            const tanggal = now.toISOString().split('T')[0];
+            const jamKeluar = now.toLocaleTimeString("id-ID", {
+                hour: "2-digit",
+                minute: "2-digit"
+            });
+
+            let data = getPresensi();
+            const index = data.findIndex(item => item.tanggal === tanggal);
+
+            if (index === -1) {
+                alert("Kamu belum Check In hari inii! :)");
+                return;
+            }
+
+            data[index].jamKeluar = jamKeluar;
+            savePresensi(data);
+
+            alert(`Check Out kmu berhasil padaa ${jamKeluar}`);
+        }
+
+
+
+        function izinSakit(status) {
+            const now = new Date();
+            const tanggal = now.toISOString().split('T')[0];
+
+            let data = getPresensi();
+
+            // Kalau sudah ada presensi hari itu → stop
+            if (data.some(item => item.tanggal === tanggal)) {
+                alert("Presensi hari ini udh di catett :)");
+                return;
+            }
+
+            data.push({
+                tanggal,
+                jamMasuk: "-",
+                jamKeluar: "-",
+                status: status  // "Sakit" atau "Izin"
+            });
+
+            savePresensi(data);
+            alert(`Status ${status} berhasil di simpenn! :)`);
+        }
+
+        function logout() {
+            localStorage.removeItem("user");
+            window.location.href = "index.html";
+        }
+    </script>
+
+</body>
+
+</html>
