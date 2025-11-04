@@ -23,7 +23,7 @@
             <img src="src/profil.jpg" alt="Foto Profil"
                 class="w-28 h-28 rounded-full border-4 border-yellow-300 shadow-lg object-cover">
             <h2 id="namaUser" class="mt-3 text-2xl font-semibold text-yellow-300 drop-shadow-md"></h2>
-            <p class="text-sm text-white/70 italic"> Siswa Paling TEladan sak moklet! </p>
+            <p class="text-sm text-white/70 italic"> Siswa Paling TEladan sak moklet!! :') </p>
         </div>
 
         <p class="mb-8 text-white/80">Hii Selamat datang di Dashboard presensi!! :) ⛵</p>
@@ -43,7 +43,7 @@
             <!-- ✅ Tambahan: Sakit -->
             <button onclick="izinSakit('Sakit')"
                 class="w-full py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-xl font-semibold text-white hover:scale-105 transition-transform shadow-lg">
-                🤒 Sakit
+                🤒 Sakit :(
             </button>
 
             <!-- ✅ Tambahan: Izin -->
@@ -91,14 +91,14 @@
             let data = getPresensi();
 
             if (data.some(item => item.tanggal === tanggal)) {
-                alert("Kamu sudah Check In hari inii! :)");
+                alert("Kamu udh Check In hari inii! :)");
                 return;
             }
 
             data.push({ tanggal, jamMasuk, jamKeluar: "-", status: "Hadir" });
             savePresensi(data);
 
-            alert(`Check In berhasil pada ${jamMasuk}`);
+            alert(`yey Check In kmuu berhasil pada ${jamMasuk}`);
         }
 
         function checkOut() {
@@ -113,14 +113,14 @@
             const index = data.findIndex(item => item.tanggal === tanggal);
 
             if (index === -1) {
-                alert("Kamu belum Check In hari inii! :)");
+                alert("Kmuu blum Check In hari inii! :)");
                 return;
             }
 
             data[index].jamKeluar = jamKeluar;
             savePresensi(data);
 
-            alert(`Check Out kmu berhasil padaa ${jamKeluar}`);
+            alert(`yee Check Out kmu berhasil :) padaa ${jamKeluar}`);
         }
 
 
@@ -133,7 +133,7 @@
 
             // Kalau sudah ada presensi hari itu → stop
             if (data.some(item => item.tanggal === tanggal)) {
-                alert("Presensi hari ini udh di catett :)");
+                alert("Presensi kmuu hari ini udh di catettt :)");
                 return;
             }
 
